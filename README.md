@@ -34,6 +34,75 @@ The project leverages OpenAI's `runTools` API, which automates the complex proce
    - Provides current weather data
    - Returns temperature and other weather metrics
 
+### Example Output
+
+The agent's execution can be monitored through the event listener and final content. Here's an example of the output:
+
+#### Event Listener Messages:
+```javascript
+// First message - Assistant making a function call
+Message: {
+  role: 'assistant',
+  content: null,
+  tool_calls: [
+    {
+      id: 'call_PEOPtUsRqmK3MnwVoCsC753s',
+      type: 'function',
+      function: [Object]
+    }
+  ]
+}
+
+// Second message - Tool response (Location data)
+Message: {
+  role: 'tool',
+  tool_call_id: 'call_PEOPtUsRqmK3MnwVoCsC753s',
+  content: '{"latitude":47.6008,"longitude":-122.3248,"city":"Seattle","country":"United States"}'
+}
+
+// Third message - Assistant making another function call
+Message: {
+  role: 'assistant',
+  content: null,
+  tool_calls: [
+    {
+      id: 'call_R2FlfXT7wsI8EouJFfNhNZD0',
+      type: 'function',
+      function: [Object]
+    }
+  ]
+}
+
+// Fourth message - Another tool response (Weather data)
+Message: {
+  role: 'tool',
+  tool_call_id: 'call_R2FlfXT7wsI8EouJFfNhNZD0',
+  content: '{"temperature":7.2,"unit":"°C","location":"Latitude: 47.6008, Longitude: -122.3248"}'
+}
+
+// Final message - Assistant's response
+Message: {
+  role: 'assistant',
+  content: 'Based on your location in Seattle...',
+  refusal: null,
+  annotations: [],
+  parsed: null
+}
+```
+
+#### Final Content:
+```
+Based on your location in Seattle and the current weather of 7.2°C, here are some activities I would recommend:
+
+1. Visit the iconic Pike Place Market. It offers fresh produce, unique local businesses and eateries, and the weather is perfect for it.
+2. Take a walk at the Seattle Waterfront. The breeze from the water will be refreshing. 
+3. Explore the Seattle Art Museum. If the temperature drops, this would make for a great indoor activity.
+4. Enjoy some coffee. Seattle is known for its coffee scene.
+5. Visit the famous Space Needle and enjoy the city view.
+
+Remember to bundle up, as the weather is quite chilly!
+```
+
 ### Why `runTools` is Better Than Traditional Approach
 
 Using the traditional completion API would require manual implementation of:
